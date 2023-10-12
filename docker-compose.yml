@@ -1,0 +1,27 @@
+version: "3.3"
+services:
+  app:
+    container_name: data-tool
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    working_dir: /home/node/app
+    # command: npm start
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - .:/home/node/app
+      - /home/node/app/node_modules
+    networks:
+      - data-tool-network
+    ports:
+      - 9200:${PORT}
+    environment:
+      APP_ENV: development
+      PORT: ${PORT}
+      ENABLE_SWAGGER: ${ENABLE_SWAGGER}
+      ENABLE_CORS: ${ENABLE_CORS}
+      NODE_OPTIONS: --max_old_space_size=4096
+
+networks:
+  data-tool-network:

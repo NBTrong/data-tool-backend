@@ -1,0 +1,24 @@
+{
+  // For airbnb style guide + prettier
+  "extends": ["airbnb-base", "airbnb-typescript/base"],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "env": {
+    "node": true,
+    "browser": true,
+    "es2021": true
+  },
+  "rules": {
+    "no-unused-vars": ["warn"],
+    "no-var": ["off"],
+    "one-var": ["off"],
+    "import/prefer-default-export": "off",
+    "no-promise-executor-return": "off",
+    "no-underscore-dangle": "off",
+    "max-classes-per-file": "off",
+    "no-param-reassign": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "class-methods-use-this": "off"
+  }
+}

@@ -1,0 +1,1501 @@
+{
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"CResponse": {
+				"properties": {
+					"data": {},
+					"status": {
+						"type": "string",
+						"enum": [
+							"success",
+							"error"
+						]
+					},
+					"message": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"status",
+					"message"
+				],
+				"type": "object"
+			},
+			"CQueueImport": {
+				"properties": {
+					"created_at": {
+						"nullable": true
+					},
+					"post": {
+						"nullable": true
+					},
+					"desc": {
+						"type": "string",
+						"nullable": true
+					},
+					"id": {
+						"type": "string",
+						"nullable": true
+					},
+					"title": {
+						"type": "string",
+						"nullable": true
+					},
+					"name": {
+						"type": "string",
+						"nullable": true
+					},
+					"author": {
+						"nullable": true
+					},
+					"video": {
+						"nullable": true
+					},
+					"page": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"status": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"confident_rate": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"country": {
+						"type": "string",
+						"nullable": true
+					},
+					"keyword_search": {
+						"type": "string",
+						"nullable": true
+					},
+					"keyword": {
+						"type": "string",
+						"nullable": true
+					},
+					"similar_keywords": {
+						"type": "string",
+						"nullable": true
+					},
+					"trend": {
+						"type": "string",
+						"nullable": true
+					},
+					"max_cpc": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"min_cpc": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"max_price": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"min_price": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"bid_price": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"search_volume": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"labels": {
+						"nullable": true
+					},
+					"uploaded_time": {
+						"type": "string",
+						"nullable": true
+					},
+					"koc_follower_count": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"total_saves": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"total_comments": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"total_shares": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"total_likes": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"total_views": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"is_detect_voice": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"comments": {
+						"type": "string",
+						"nullable": true
+					},
+					"match_keywords": {
+						"type": "string",
+						"nullable": true
+					},
+					"transcript": {
+						"type": "string",
+						"nullable": true
+					},
+					"tags": {
+						"type": "string",
+						"nullable": true
+					},
+					"thumb_url": {
+						"type": "string",
+						"nullable": true
+					},
+					"file_url": {
+						"type": "string",
+						"nullable": true
+					},
+					"description": {
+						"type": "string",
+						"nullable": true
+					},
+					"platform": {
+						"type": "string",
+						"nullable": true
+					},
+					"koc": {
+						"type": "string",
+						"nullable": true
+					},
+					"post_url": {
+						"type": "string",
+						"nullable": true
+					},
+					"create_time": {
+						"type": "string",
+						"nullable": true
+					},
+					"url": {
+						"type": "string",
+						"nullable": true
+					},
+					"input_file_id": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					}
+				},
+				"type": "object",
+				"nullable": true
+			},
+			"CSettingCreate": {
+				"properties": {
+					"value": {
+						"type": "string"
+					}
+				},
+				"type": "object"
+			}
+		},
+		"securitySchemes": {
+			"jwt": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT",
+				"in": "header"
+			},
+			"tsoa_auth": {
+				"type": "oauth2",
+				"flows": {
+					"implicit": {
+						"authorizationUrl": "http://swagger.io/api/oauth/dialog",
+						"scopes": {
+							"write:pets": "modify things",
+							"read:pets": "read things"
+						}
+					}
+				}
+			}
+		}
+	},
+	"info": {
+		"title": "tracking-statistics-server",
+		"version": "1.0.0",
+		"license": {
+			"name": "UNLICENSED"
+		},
+		"contact": {}
+	},
+	"openapi": "3.0.0",
+	"paths": {
+		"/api/v1/login": {
+			"post": {
+				"operationId": "login",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "No content"
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										},
+										"status": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"message",
+										"status"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"email": {
+										"type": "string"
+									},
+									"password": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"email",
+									"password"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/logout": {
+			"post": {
+				"operationId": "logout",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "No content"
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										},
+										"status": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"message",
+										"status"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/api/v1/refreshToken": {
+			"post": {
+				"operationId": "refreshToken",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "No content"
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										},
+										"status": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"message",
+										"status"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"refreshToken": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"refreshToken"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/forgotPassword": {
+			"post": {
+				"operationId": "forgotPassword",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "No content"
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										},
+										"status": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"message",
+										"status"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"email": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"email"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/updatePassword": {
+			"put": {
+				"operationId": "updatePassword",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "No content"
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										},
+										"status": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"message",
+										"status"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"password": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"password"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/crawl/tiktok": {
+			"get": {
+				"operationId": "crawlTiktokData",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Crawl"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "post_id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "region",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/crawl/tiktok/hashtag-posts": {
+			"get": {
+				"operationId": "crawlTiktokSearchHashtagPosts",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Crawl"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "cid",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "cursor",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "region",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/crawl/tiktok/hashtag-id": {
+			"get": {
+				"operationId": "crawlTiktokGetHashtagId",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Crawl"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "hashtag",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/crawl/tiktok/user-info": {
+			"get": {
+				"operationId": "crawlTiktokGetUserInfo",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Crawl"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "username",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/crawl/tiktok/user-posts": {
+			"get": {
+				"operationId": "crawlTiktokUserPosts",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Crawl"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "search",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "maxCursor",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "count",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/crawl/tiktok/post-comments": {
+			"get": {
+				"operationId": "crawlTiktokPostComments",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Crawl"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "aweme_id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "cursor",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/crawl/tiktok/post-comment-replies": {
+			"get": {
+				"operationId": "crawlTiktokPostCommentReplies",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Crawl"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "aweme_id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "comment_id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "cursor",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/crawl/tiktok/search/post": {
+			"get": {
+				"operationId": "crawlTiktokSearchPost",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Crawl"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "keyword",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "offset",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sort_type",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "publish_time",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/input-file": {
+			"post": {
+				"operationId": "createInputFile",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"InputFile"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "tab",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "row_count",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "query",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"file": {
+										"type": "string",
+										"format": "binary"
+									}
+								},
+								"required": [
+									"file"
+								]
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "listInputFile",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"InputFile"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "page",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "search",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/input-file/count": {
+			"get": {
+				"operationId": "countInputFiles",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"InputFile"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/api/v1/input-file/upload-file": {
+			"post": {
+				"operationId": "uploadExcelFile",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"InputFile"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "path",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "file_name",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"file": {
+										"type": "string",
+										"format": "binary"
+									}
+								},
+								"required": [
+									"file"
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/input-file/{fileInputId}/update-progress": {
+			"put": {
+				"operationId": "updateProgress",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"InputFile"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "fileInputId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "progress",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "status",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "result_url",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "start_time",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "index_processed",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "total_success",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/input-file/queue": {
+			"get": {
+				"operationId": "getInputFileInQueue",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"InputFile"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/api/v1/input-file/{fileInputId}": {
+			"get": {
+				"operationId": "getInputFile",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"InputFile"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "fileInputId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/queue/import": {
+			"post": {
+				"operationId": "importRowToQueue",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"queue"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "tab",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "input_file_id",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"items": {
+									"$ref": "#/components/schemas/CQueueImport"
+								},
+								"type": "array"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/queue/export": {
+			"post": {
+				"operationId": "exportExcel",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"queue"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "file_id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "tab",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "batch_size",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/queue/{fileId}/failed-rows": {
+			"get": {
+				"operationId": "getFailedRows",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"queue"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "fileId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "tab",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/settings/type": {
+			"get": {
+				"operationId": "getSettingByType",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Settings"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "type",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/settings/{settingId}/update": {
+			"put": {
+				"operationId": "updateSetting",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Settings"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "settingId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CSettingCreate"
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}
