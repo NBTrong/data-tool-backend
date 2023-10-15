@@ -29,20 +29,9 @@ export class AuthServices implements IAuthServices {
     if (!validPassword) {
       throw new Error('Invalid email or password');
     }
-    const tokens = await generateTokens(user.id);
-    const userToken = await this.userTokenRepository.findByUserId(user.id);
-    if (!userToken) {
-      await this.userTokenRepository.create({
-        user_id: Number(user.id),
-        token: tokens.refreshToken,
-      });
-    } else {
-      tokens.refreshToken = userToken.token;
-    }
+
     return {
       user,
-      accessToken: tokens.accessToken,
-      refreshToken: tokens.refreshToken,
     };
   }
 }
