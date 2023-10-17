@@ -71,4 +71,29 @@ export class AuthServices implements IAuthServices {
       refreshToken: tokens.refreshToken,
     };
   }
+
+  public async forgotPassword(email: string): Promise<void> {
+    const user = await this.userRepository.findByEmail(email);
+    if (!user) {
+      throw new NotFoundError('User not found!');
+    }
+    const payload = {
+      id: user.id,
+    };
+    const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: '15m',
+    });
+    const link = `${process.env.FRONTEND_URL}/reset-password?token=${accessToken}`;
+    const subject = 'Reset Password For Your KOC Account';
+    await sendEmail(email, subject, link);
+  }
+
+  public async updatePassword(id: number, password: string): Promise<void> {
+    const user = await this.userRepository.findById(id);
+    if (!user) {
+      throw new NotFoundError('User not found!');
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await this.userRepository.updateById(id, { password: hashedPassword });
+  }
 }

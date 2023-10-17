@@ -91,4 +91,48 @@ export class AuthController extends Controller {
       });
     }
   }
+
+  @Post('forgotPassword')
+  @OperationId('forgotPassword')
+  @Response<{ status: number; message: string }>(400, 'Bad Request')
+  public async forgotPassword(
+    @Body() body: { email: string },
+    @Res() res: TsoaResponse<200, CResponse>,
+  ): Promise<void> {
+    try {
+      await this.authServices.forgotPassword(body.email);
+      return res(200, {
+        message: 'A password reset link has been sent to your email.',
+        status: 'success',
+      });
+    } catch (error: any) {
+      return res(error.code || 500, {
+        message: error.message,
+        status: 'error',
+      });
+    }
+  }
+
+  @Put('updatePassword')
+  @OperationId('updatePassword')
+  @Security('jwt')
+  @Response<{ status: number; message: string }>(400, 'Bad Request')
+  public async updatePassword(
+    @Body() body: { password: string },
+    @Request() request,
+    @Res() res: TsoaResponse<200, CResponse>,
+  ): Promise<void> {
+    try {
+      await this.authServices.updatePassword(request.user.id, body.password);
+      return res(200, {
+        message: 'Password updated successfully',
+        status: 'success',
+      });
+    } catch (error: any) {
+      return res(error.code || 500, {
+        message: error.toString(),
+        status: 'error',
+      });
+    }
+  }
 }
