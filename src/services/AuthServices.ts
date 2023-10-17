@@ -45,4 +45,12 @@ export class AuthServices implements IAuthServices {
       refreshToken: tokens.refreshToken,
     };
   }
+
+  public async logout(id: number): Promise<void> {
+    const userToken = await this.userTokenRepository.findByUserId(id);
+    if (!userToken) {
+      throw new Error('Unauthorized!');
+    }
+    await this.userTokenRepository.deleteById(userToken.id);
+  }
 }

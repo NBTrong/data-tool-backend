@@ -46,4 +46,26 @@ export class AuthController extends Controller {
       });
     }
   }
+
+  @Post('logout')
+  @OperationId('logout')
+  @Security('jwt')
+  @Response<{ status: number; message: string }>(400, 'Bad Request')
+  public async logout(
+    @Request() request,
+    @Res() res: TsoaResponse<200, CResponse>,
+  ): Promise<void> {
+    try {
+      await this.authServices.logout(request.user.id);
+      return res(200, {
+        message: 'User logged out successfully.',
+        status: 'success',
+      });
+    } catch (error: any) {
+      return res(error.code || 500, {
+        message: error.message,
+        status: 'error',
+      });
+    }
+  }
 }
