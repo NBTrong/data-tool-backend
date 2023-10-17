@@ -53,4 +53,22 @@ export class AuthServices implements IAuthServices {
     }
     await this.userTokenRepository.deleteById(userToken.id);
   }
+
+  public async refresh(refreshToken: string): Promise<SLoginResult> {
+    const userToken = await this.userTokenRepository.findByRefreshToken(refreshToken);
+    if (!userToken) {
+      throw new Error('Unauthorized!');
+    }
+    const user: SUser = await this.userRepository.findById(userToken.user_id);
+    if (!user) {
+      throw new NotFoundError('User not found!');
+    }
+    const tokens = await generateTokens(user.id);
+    tokens.refreshToken = userToken.token;
+    return {
+      user,
+      accessToken: tokens.accessToken,
+      refreshToken: tokens.refreshToken,
+    };
+  }
 }

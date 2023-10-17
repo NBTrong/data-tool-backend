@@ -68,4 +68,27 @@ export class AuthController extends Controller {
       });
     }
   }
+
+  @Post('refreshToken')
+  @OperationId('refreshToken')
+  @Response<{ status: number; message: string }>(400, 'Bad Request')
+  // eslint-disable-next-line consistent-return
+  public async refresh(
+    @Body() body: { refreshToken: string },
+    @Res() res: TsoaResponse<200, CResponse>,
+  ): Promise<void> {
+    try {
+      const data = await this.authServices.refresh(body.refreshToken);
+      return res(200, {
+        message: 'Token refreshed successfully.',
+        status: 'success',
+        data,
+      });
+    } catch (error: any) {
+      return res(error.code || 500, {
+        message: error.toString(),
+        status: 'error',
+      });
+    }
+  }
 }
