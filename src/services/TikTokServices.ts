@@ -70,4 +70,40 @@ export class TikTokServices implements ITikTokServices {
       next_page: maxCursor,
     };
   }
+
+  public async getHashtagId(hashtag: string): Promise<any> {
+    try {
+      const response = await this.tiktokRapidApi({
+        method: 'GET',
+        url: '/search/hashtag',
+        params: {
+          keyword: hashtag,
+          count: '1',
+          // cursor: '0',
+        },
+      });
+      console.log('hohohohoho');
+      return response?.data?.challenge_list[0]?.challenge_info?.cid;
+    } catch (error: any) {
+      throw new InternalError(error.message);
+    }
+  }
+
+  async getUserInfoMobile(username: string): Promise<any> {
+    await sleepEach50Requests();
+    const response = await this.tiktokRapidApi({
+      method: 'GET',
+      url: `/user/${username}`,
+      params: { username },
+    });
+    const webData = response?.data;
+    const syncData = { userInfo: webData };
+    syncData.userInfo.user.id = webData?.user?.uid;
+    syncData.userInfo.user.avatarThumb = webData?.user?.avatar_thumb?.url_list[0];
+    syncData.userInfo.stats = {
+      videoCount: webData?.user?.aweme_count,
+      followerCount: webData?.user?.follower_count,
+    };
+    return syncData;
+  }
 }

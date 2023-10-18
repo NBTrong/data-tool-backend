@@ -44,4 +44,25 @@ export class CrawlDataController extends Controller {
       });
     }
   }
+
+  @Get('/tiktok/hashtag-id')
+  @OperationId('crawlTiktokGetHashtagId')
+  public async crawlTiktokGetHashtagId(
+    @Res() res: TsoaResponse<200, CResponse>,
+    @Query() hashtag: string,
+  ): Promise<CResponse> {
+    try {
+      const response = await this.tiktokServices.getHashtagId(hashtag);
+      return {
+        message: `Get hashtag id: '${hashtag}' successfully`,
+        status: 'success',
+        data: response,
+      };
+    } catch (error: any) {
+      return res(error.code || 500, {
+        message: error.message,
+        status: 'error',
+      });
+    }
+  }
 }
