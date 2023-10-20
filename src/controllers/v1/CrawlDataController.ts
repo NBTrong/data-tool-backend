@@ -45,6 +45,7 @@ export class CrawlDataController extends Controller {
     }
   }
 
+
   @Get('/tiktok/hashtag-id')
   @OperationId('crawlTiktokGetHashtagId')
   public async crawlTiktokGetHashtagId(
@@ -55,6 +56,43 @@ export class CrawlDataController extends Controller {
       const response = await this.tiktokServices.getHashtagId(hashtag);
       return {
         message: `Get hashtag id: '${hashtag}' successfully`,
+        status: 'success',
+        data: response,
+      };
+    } catch (error: any) {
+      return res(error.code || 500, {
+        message: error.message,
+        status: 'error',
+      });
+    }
+  }
+
+  @Get('/tiktok/user-info')
+  @OperationId('crawlTiktokGetUserInfo')
+  async crawlTiktokGetUserInfo(
+    @Res() res: TsoaResponse<200, CResponse>,
+    @Query() username: string,
+  ) {
+    const ui = await this.tiktokServices.getUserInfo(username);
+    return {
+      message: `Get id of user: '${username}' successfully`,
+      status: 'success',
+      data: ui,
+    };
+  }
+
+  @Get('/tiktok/user-posts')
+  @OperationId('crawlTiktokUserPosts')
+  public async crawlTiktokUserPosts(
+    @Res() res: TsoaResponse<200, CResponse>,
+    @Query() search: any,
+    @Query() maxCursor?: string,
+    @Query() count?: string,
+  ): Promise<CResponse> {
+    try {
+      const response = await this.tiktokServices.getUserPosts(search, maxCursor, count);
+      return {
+        message: `Get all posts from user: '${search}' successfully`,
         status: 'success',
         data: response,
       };

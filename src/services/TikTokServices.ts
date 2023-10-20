@@ -106,4 +106,53 @@ export class TikTokServices implements ITikTokServices {
     };
     return syncData;
   }
+
+  public async getUserInfo(username: string): Promise<any> {
+    try {
+      // let user = await this.getUserInfoWeb(username);
+      // if (!user?.userInfo) {
+      //   user = await this.getUserInfoMobile(username);
+      // }
+      const user = await this.getUserInfoMobile(username.includes('@') ? username : `@${username}`);
+      return user;
+    } catch (error: any) {
+      throw new InternalError(error.message);
+    }
+  }
+
+  async getUserId(username: string): Promise<any> {
+    try {
+      const response = await this.getUserInfoMobile(username.includes('@') ? username : `@${username}`);
+      return response?.userInfo.user.id;
+    } catch (error: any) {
+      throw new InternalError(error.message);
+    }
+  }
+
+  public async getUserPosts(
+    search: string,
+    maxCursor: string,
+    count = '30',
+    region?: string,
+    with_pinned_posts?: string,
+  ): Promise<any> {
+    try {
+      // await sleepEach50Requests();
+      const uid = !Number.isNaN(Number(search)) ? search : await this.getUserId(search);
+      const response = await this.tiktokRapidApi({
+        method: 'GET',
+        url: `/post/user/${uid}/posts`,
+        params: {
+          count: count || '30',
+          offset: maxCursor ?? '0',
+          region: region ?? this.defaultRegion,
+          with_pinned_posts: with_pinned_posts ?? '1',
+        },
+      });
+
+      return this.parseDataPosts(response.data);
+    } catch (error: any) {
+      throw new InternalError(error.message);
+    }
+  }
 }
