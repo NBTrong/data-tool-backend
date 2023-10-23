@@ -124,4 +124,31 @@ export class CrawlDataController extends Controller {
       });
     }
   }
+
+  @Get('/tiktok/post-comment-replies')
+  @OperationId('crawlTiktokPostCommentReplies')
+  public async crawlTiktokPostCommentReplies(
+    @Res() res: TsoaResponse<200, CResponse>,
+    @Query() aweme_id: string,
+    @Query() comment_id: string,
+    @Query() cursor: string,
+  ): Promise<CResponse> {
+    try {
+      const response = await this.tiktokServices.getPostCommentReplies(
+        aweme_id,
+        comment_id,
+        cursor,
+      );
+      return {
+        message: `Get comment's replies from comment: '${comment_id}' successfully`,
+        status: 'success',
+        data: response,
+      };
+    } catch (error: any) {
+      return res(error.code || 500, {
+        message: error.message,
+        status: 'error',
+      });
+    }
+  }
 }

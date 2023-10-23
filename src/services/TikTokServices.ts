@@ -178,4 +178,31 @@ export class TikTokServices implements ITikTokServices {
       throw new InternalError(error.message);
     }
   }
+
+  public async getPostCommentReplies(
+    aweme_id: string,
+    comment_id: string,
+    cursor: string,
+  ): Promise<any> {
+    try {
+      await sleepEach50Requests();
+      const response = await this.tiktokRapidApi({
+        method: 'GET',
+        url: `/post/${aweme_id}/comment/${comment_id}/replies`,
+        params: {
+          count: this.countNumberPostCommentsPerRes,
+          offset: cursor,
+        },
+      });
+      await sleepIfTooManyRequest(response?.status);
+      return {
+        comments: response?.data?.comments,
+        hasMore: response?.data?.has_more,
+        cursor: response?.data?.cursor,
+        count: this.countNumberPostCommentsPerRes,
+      };
+    } catch (error: any) {
+      throw new InternalError(error.message);
+    }
+  }
 }
