@@ -45,6 +45,28 @@ export class CrawlDataController extends Controller {
     }
   }
 
+  @Get('/tiktok/hashtag-posts')
+  @OperationId('crawlTiktokSearchHashtagPosts')
+  public async crawlTiktokSearchHashtagPosts(
+    @Res() res: TsoaResponse<200, CResponse>,
+    @Query() cid: string,
+    @Query() cursor?: string,
+    @Query() region?: string,
+  ): Promise<CResponse> {
+    try {
+      const response = await this.tiktokServices.searchPostsByHashtag(cid, cursor, region);
+      return {
+        message: `Get posts by cid '${cid}' successfully`,
+        status: 'success',
+        data: response,
+      };
+    } catch (error: any) {
+      return res(error.code || 500, {
+        message: error.message,
+        status: 'error',
+      });
+    }
+  }
 
   @Get('/tiktok/hashtag-id')
   @OperationId('crawlTiktokGetHashtagId')

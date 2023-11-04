@@ -71,6 +71,24 @@ export class TikTokServices implements ITikTokServices {
     };
   }
 
+  public async searchPostsByHashtag(cid: string, cursor: string, region?: string): Promise<any> {
+    try {
+      // await sleepEach50Requests();
+      const response = await this.tiktokRapidApi({
+        method: 'GET',
+        url: `/hashtag/posts/${cid}`,
+        params: {
+          count: this.countNumberUserPostPerRes,
+          offset: cursor,
+          region: region || this.defaultRegion,
+        },
+      });
+      return this.parseDataPosts(response?.data);
+    } catch (error: any) {
+      throw new InternalError(error.message);
+    }
+  }
+
   public async getHashtagId(hashtag: string): Promise<any> {
     try {
       const response = await this.tiktokRapidApi({
