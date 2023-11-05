@@ -223,4 +223,23 @@ export class TikTokServices implements ITikTokServices {
       throw new InternalError(error.message);
     }
   }
+
+  public async getPostById(post_id: string, region?: string): Promise<any> {
+    try {
+      await sleepEach50Requests();
+      console.log('region', region);
+      const response = await this.tiktokRapidApi({
+        method: 'GET',
+        url: `/post/${post_id}`,
+        params: {
+          region: region ?? this.defaultRegion,
+        },
+      });
+      await sleepIfTooManyRequest(response?.status);
+      return response?.data;
+    } catch (error: any) {
+      throw new InternalError(error.message);
+    }
+  }
+}
 }
