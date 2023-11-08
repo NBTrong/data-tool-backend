@@ -71,6 +71,30 @@ export class TikTokServices implements ITikTokServices {
     };
   }
 
+  public async searchPostsByKeyword(
+    keyword: string,
+    offset: number,
+    sort_type: number,
+    publish_time: number,
+  ): Promise<any> {
+    try {
+      const response = await this.tiktokRapidApi({
+        method: 'GET',
+        url: '/search/post',
+        params: {
+          keyword,
+          offset,
+          sort_type,
+          publish_time,
+          count: this.countNumberSearchPostPerRes,
+        },
+      });
+      return this.parseDataPosts(response?.data);
+    } catch (error: any) {
+      throw new InternalError(error.message);
+    }
+  }
+
   public async searchPostsByHashtag(cid: string, cursor: string, region?: string): Promise<any> {
     try {
       // await sleepEach50Requests();
@@ -241,5 +265,4 @@ export class TikTokServices implements ITikTokServices {
       throw new InternalError(error.message);
     }
   }
-}
 }

@@ -173,4 +173,34 @@ export class CrawlDataController extends Controller {
       });
     }
   }
+
+  @Get('/tiktok/search/post')
+  @OperationId('crawlTiktokSearchPost')
+  public async crawlTiktokSearchPost(
+    @Res() res: TsoaResponse<200, CResponse>,
+    @Query() keyword: string,
+    @Query() offset?: number,
+    @Query() sort_type?: number,
+    @Query() publish_time?: number,
+  ): Promise<CResponse> {
+    try {
+      const response = await this.tiktokServices.searchPostsByKeyword(
+        keyword,
+        offset,
+        sort_type,
+        publish_time,
+      );
+      return {
+        message: `Search post by keyword: '${keyword}' successfully`,
+        status: 'success',
+        data: response,
+      };
+    } catch (error: any) {
+      return res(error.code || 500, {
+        message: error.message,
+        status: 'error',
+      });
+    }
+
+  }
 }
