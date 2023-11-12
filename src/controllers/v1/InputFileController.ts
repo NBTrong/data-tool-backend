@@ -16,6 +16,7 @@ import { injectable } from 'inversify';
 import InputFile from '@n-models/InputFile';
 import { CResponse } from '../types';
 
+
 @injectable()
 @Tags('InputFile')
 @Route('api/v1/input-file')
@@ -27,11 +28,11 @@ export class InputFileController extends Controller {
   @OperationId('createInputFile')
   public async createInputFile(
     @Res() res: TsoaResponse<200, CResponse>,
-      @UploadedFile() file: Express.Multer.File,
-      @Query() tab?: string,
-      @Query() row_count?: number,
-      @Query() query?: string,
-  ): Promise<void > {
+    @UploadedFile() file: Express.Multer.File,
+    @Query() tab?: string,
+    @Query() row_count?: number,
+    @Query() query?: string,
+  ): Promise<void> {
     try {
       const files = await this.inputFileService
         .createInputFile(file, tab, row_count, decodeURIComponent(query));
@@ -52,10 +53,10 @@ export class InputFileController extends Controller {
   @OperationId('listInputFile')
   public async listInputFile(
     @Res() res: TsoaResponse<200, CResponse>,
-      @Query() page: number,
-      @Query() limit: number,
-      @Query() search?: string,
-  ): Promise<void > {
+    @Query() page: number,
+    @Query() limit: number,
+    @Query() search?: string,
+  ): Promise<void> {
     try {
       const inputFiles = await this.inputFileService.listInputFile({
         search,
@@ -79,7 +80,7 @@ export class InputFileController extends Controller {
   @OperationId('countInputFiles')
   public async countInputFiles(
     @Res() res: TsoaResponse<200, CResponse>,
-  ): Promise<void > {
+  ): Promise<void> {
     try {
       const count = await InputFile.query().whereIn('status', ['created', 'processing']).count();
       return res(200, {
@@ -99,10 +100,10 @@ export class InputFileController extends Controller {
   @OperationId('uploadExcelFile')
   public async uploadExcelFile(
     @Res() res: TsoaResponse<200, CResponse>,
-      @UploadedFile() file: Express.Multer.File,
-      @Query() path?: string,
-      @Query() file_name?: string,
-  ): Promise<void > {
+    @UploadedFile() file: Express.Multer.File,
+    @Query() path?: string,
+    @Query() file_name?: string,
+  ): Promise<void> {
     try {
       const url = await this.inputFileService.uploadFile(file, `${path}/data-crawled`, file_name);
       return res(200, {
@@ -122,17 +123,17 @@ export class InputFileController extends Controller {
   @OperationId('updateProgress')
   public async updateProgress(
     @Res() res: TsoaResponse<200, CResponse>,
-      @Path() fileInputId,
-      @Query() progress?: number,
-      @Query() status?: string,
-      @Query() result_url?: string,
-      @Query() start_time?: string,
-      @Query() index_processed?: number,
-      @Query() total_success?: number,
-  ): Promise<void > {
+    @Path() fileInputId,
+    @Query() progress?: number,
+    @Query() status?: string,
+    @Query() result_url?: string,
+    @Query() start_time?: string,
+    @Query() index_processed?: number,
+    @Query() total_success?: number,
+  ): Promise<void> {
     try {
       const url = await this.inputFileService.updateProgress(fileInputId, {
-        progress, status, result_url, start_time,index_processed,total_success
+        progress, status, result_url, start_time, index_processed, total_success
       });
       return res(200, {
         message: 'Update file input file successfully.',
@@ -151,7 +152,7 @@ export class InputFileController extends Controller {
   @OperationId('getInputFileInQueue')
   public async getInputFileInQueue(
     @Res() res: TsoaResponse<200, CResponse>,
-  ): Promise<void > {
+  ): Promise<void> {
     try {
       const fileData = await this.inputFileService.getInputFileInQueue();
       return res(200, {
@@ -171,8 +172,8 @@ export class InputFileController extends Controller {
   @OperationId('getInputFile')
   public async getInputFile(
     @Res() res: TsoaResponse<200, CResponse>,
-      @Path() fileInputId,
-  ): Promise<void > {
+    @Path() fileInputId,
+  ): Promise<void> {
     try {
       const url = await this.inputFileService.getInputFile(fileInputId);
       return res(200, {
