@@ -71,6 +71,48 @@ export class TikTokServices implements ITikTokServices {
     };
   }
 
+  public async searchPostsByKeyword(
+    keyword: string,
+    offset: number,
+    sort_type: number,
+    publish_time: number,
+  ): Promise<any> {
+    try {
+      const response = await this.tiktokRapidApi({
+        method: 'GET',
+        url: '/search/post',
+        params: {
+          keyword,
+          offset,
+          sort_type,
+          publish_time,
+          count: this.countNumberSearchPostPerRes,
+        },
+      });
+      return this.parseDataPosts(response?.data);
+    } catch (error: any) {
+      throw new InternalError(error.message);
+    }
+  }
+
+  public async searchPostsByHashtag(cid: string, cursor: string, region?: string): Promise<any> {
+    try {
+      // await sleepEach50Requests();
+      const response = await this.tiktokRapidApi({
+        method: 'GET',
+        url: `/hashtag/posts/${cid}`,
+        params: {
+          count: this.countNumberUserPostPerRes,
+          offset: cursor,
+          region: region || this.defaultRegion,
+        },
+      });
+      return this.parseDataPosts(response?.data);
+    } catch (error: any) {
+      throw new InternalError(error.message);
+    }
+  }
+
   public async getHashtagId(hashtag: string): Promise<any> {
     try {
       const response = await this.tiktokRapidApi({
@@ -201,6 +243,24 @@ export class TikTokServices implements ITikTokServices {
         cursor: response?.data?.cursor,
         count: this.countNumberPostCommentsPerRes,
       };
+    } catch (error: any) {
+      throw new InternalError(error.message);
+    }
+  }
+
+  public async getPostById(post_id: string, region?: string): Promise<any> {
+    try {
+      await sleepEach50Requests();
+      console.log('region', region);
+      const response = await this.tiktokRapidApi({
+        method: 'GET',
+        url: `/post/${post_id}`,
+        params: {
+          region: region ?? this.defaultRegion,
+        },
+      });
+      await sleepIfTooManyRequest(response?.status);
+      return response?.data;
     } catch (error: any) {
       throw new InternalError(error.message);
     }

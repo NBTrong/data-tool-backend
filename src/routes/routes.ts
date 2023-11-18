@@ -208,34 +208,6 @@ export function RegisterRoutes(app: express.Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/api/v1/crawl/tiktok/hashtag-posts',
-            ...(fetchMiddlewares<RequestHandler>(CrawlDataController)),
-            ...(fetchMiddlewares<RequestHandler>(CrawlDataController.prototype.crawlTiktokSearchHashtagPosts)),
-
-            function CrawlDataController_crawlTiktokSearchHashtagPosts(request: any, response: any, next: any) {
-            const args = {
-                    res: {"in":"res","name":"200","required":true,"ref":"CResponse"},
-                    cid: {"in":"query","name":"cid","required":true,"dataType":"string"},
-                    cursor: {"in":"query","name":"cursor","dataType":"string"},
-                    region: {"in":"query","name":"region","dataType":"string"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-
-                const controller = new CrawlDataController();
-
-
-              const promise = controller.crawlTiktokSearchHashtagPosts.apply(controller, validatedArgs as any);
-              promiseHandler(controller, promise, response, undefined, next);
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/v1/crawl/tiktok/hashtag-id',
             ...(fetchMiddlewares<RequestHandler>(CrawlDataController)),
             ...(fetchMiddlewares<RequestHandler>(CrawlDataController.prototype.crawlTiktokGetHashtagId)),
@@ -365,35 +337,6 @@ export function RegisterRoutes(app: express.Router) {
 
 
               const promise = controller.crawlTiktokPostCommentReplies.apply(controller, validatedArgs as any);
-              promiseHandler(controller, promise, response, undefined, next);
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/api/v1/crawl/tiktok/search/post',
-            ...(fetchMiddlewares<RequestHandler>(CrawlDataController)),
-            ...(fetchMiddlewares<RequestHandler>(CrawlDataController.prototype.crawlTiktokSearchPost)),
-
-            function CrawlDataController_crawlTiktokSearchPost(request: any, response: any, next: any) {
-            const args = {
-                    res: {"in":"res","name":"200","required":true,"ref":"CResponse"},
-                    keyword: {"in":"query","name":"keyword","required":true,"dataType":"string"},
-                    offset: {"in":"query","name":"offset","dataType":"double"},
-                    sort_type: {"in":"query","name":"sort_type","dataType":"double"},
-                    publish_time: {"in":"query","name":"publish_time","dataType":"double"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-
-                const controller = new CrawlDataController();
-
-
-              const promise = controller.crawlTiktokSearchPost.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);

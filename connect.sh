@@ -1,2 +1,2 @@
 #!/bin/sh
-docker exec -it data-tool bash
+docker exec -it data-tool-backend bash

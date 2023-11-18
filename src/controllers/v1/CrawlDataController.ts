@@ -45,6 +45,28 @@ export class CrawlDataController extends Controller {
     }
   }
 
+  @Get('/tiktok/hashtag-posts')
+  @OperationId('crawlTiktokSearchHashtagPosts')
+  public async crawlTiktokSearchHashtagPosts(
+    @Res() res: TsoaResponse<200, CResponse>,
+    @Query() cid: string,
+    @Query() cursor?: string,
+    @Query() region?: string,
+  ): Promise<CResponse> {
+    try {
+      const response = await this.tiktokServices.searchPostsByHashtag(cid, cursor, region);
+      return {
+        message: `Get posts by cid '${cid}' successfully`,
+        status: 'success',
+        data: response,
+      };
+    } catch (error: any) {
+      return res(error.code || 500, {
+        message: error.message,
+        status: 'error',
+      });
+    }
+  }
 
   @Get('/tiktok/hashtag-id')
   @OperationId('crawlTiktokGetHashtagId')
@@ -150,5 +172,35 @@ export class CrawlDataController extends Controller {
         status: 'error',
       });
     }
+  }
+
+  @Get('/tiktok/search/post')
+  @OperationId('crawlTiktokSearchPost')
+  public async crawlTiktokSearchPost(
+    @Res() res: TsoaResponse<200, CResponse>,
+    @Query() keyword: string,
+    @Query() offset?: number,
+    @Query() sort_type?: number,
+    @Query() publish_time?: number,
+  ): Promise<CResponse> {
+    try {
+      const response = await this.tiktokServices.searchPostsByKeyword(
+        keyword,
+        offset,
+        sort_type,
+        publish_time,
+      );
+      return {
+        message: `Search post by keyword: '${keyword}' successfully`,
+        status: 'success',
+        data: response,
+      };
+    } catch (error: any) {
+      return res(error.code || 500, {
+        message: error.message,
+        status: 'error',
+      });
+    }
+
   }
 }

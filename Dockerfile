@@ -1,14 +1,15 @@
 FROM node:14
 
 # Create app directory
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+RUN mkdir -p /home/node/app/node_modules
 
 WORKDIR /home/node/app
 
-COPY --chown=node:node package*.json ./
+COPY package*.json ./
 
-USER node
-
+# RUN npm audit fix --force
 RUN npm install --verbose
+# run this for production
+# RUN npm ci --only=production
 
-COPY --chown=node:node . .
+COPY . .

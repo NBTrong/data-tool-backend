@@ -1,10 +1,10 @@
 version: "3.3"
 services:
   app:
-    container_name: data-tool
+    container_name: data-tool-backend
     build:
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: ./Dockerfile
     working_dir: /home/node/app
     # command: npm start
     restart: unless-stopped
@@ -13,9 +13,9 @@ services:
       - .:/home/node/app
       - /home/node/app/node_modules
     networks:
-      - data-tool-network
+      - data-tool-backend-network
     ports:
-      - 9200:${PORT}
+      - 9500:${PORT}
     environment:
       APP_ENV: development
       PORT: ${PORT}
@@ -24,4 +24,4 @@ services:
       NODE_OPTIONS: --max_old_space_size=4096
 
 networks:
-  data-tool-network:
+  data-tool-backend-network:

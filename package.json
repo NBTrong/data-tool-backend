@@ -16,8 +16,8 @@
     "make:migration": "npm run knex:run -- --env=production migrate:make --",
     "make:migration:queue": "npm run knex:run:queue -- --env=production migrate:make --",
     "make:seed": "npm run knex:run -- --env=production seed:make --",
-    "migrate": "npm run knex:run -- --env=production migrate:latest -- && npm run knex:run:queue -- --env=production migrate:latest",
-    "migrate:rollback": "npm run knex:run -- --env=production migrate:rollback --",
+    "migrate": "npm run knex:run:queue -- --env=production migrate:latest",
+    "migrate:rollback": "",
     "seed": "npm run knex:run -- --env=production seed:run --",
     "swagger": "tsoa spec-and-routes"
   },
