@@ -46,6 +46,24 @@ export class AuthServices implements IAuthServices {
     };
   }
 
+  public async register(email: string, password: string): Promise<any> {
+    const user: SUser = await this.userRepository.findByEmail(email);
+    if (user) {
+      throw new Error('Email already exists');
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = await this.userRepository.create({
+      email,
+      password: hashedPassword
+    })
+
+    return {
+      user: newUser
+    };
+  }
+
   public async logout(id: number): Promise<void> {
     const userToken = await this.userTokenRepository.findByUserId(id);
     if (!userToken) {

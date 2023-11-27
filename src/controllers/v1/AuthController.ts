@@ -47,6 +47,28 @@ export class AuthController extends Controller {
     }
   }
 
+  @Post('register')
+  @OperationId('register')
+  @Response<{ status: number; message: string }>(400, 'Bad Request')
+  public async register(
+    @Body() body: { password: string; email: string },
+    @Res() res: TsoaResponse<200, CResponse>,
+  ): Promise<void> {
+    try {
+      const tokens = await this.authServices.register(body.email, body.password);
+      return res(200, {
+        message: 'User sign up successfully',
+        status: 'success',
+        data: tokens,
+      });
+    } catch (error: any) {
+      return res(error.code || 500, {
+        message: error.message,
+        status: 'error',
+      });
+    }
+  }
+
   @Post('logout')
   @OperationId('logout')
   @Security('jwt')

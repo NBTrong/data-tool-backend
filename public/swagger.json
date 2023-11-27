@@ -330,6 +330,76 @@
 				}
 			}
 		},
+		"/api/v1/register": {
+			"post": {
+				"operationId": "register",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "No content"
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										},
+										"status": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"message",
+										"status"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"email": {
+										"type": "string"
+									},
+									"password": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"email",
+									"password"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/api/v1/logout": {
 			"post": {
 				"operationId": "logout",
@@ -623,6 +693,53 @@
 				]
 			}
 		},
+		"/api/v1/crawl/tiktok/hashtag-posts": {
+			"get": {
+				"operationId": "crawlTiktokSearchHashtagPosts",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Crawl"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "cid",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "cursor",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "region",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/api/v1/crawl/tiktok/hashtag-id": {
 			"get": {
 				"operationId": "crawlTiktokGetHashtagId",
@@ -813,6 +930,64 @@
 						"required": true,
 						"schema": {
 							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/crawl/tiktok/search/post": {
+			"get": {
+				"operationId": "crawlTiktokSearchPost",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Crawl"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "keyword",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "offset",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sort_type",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "publish_time",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
 						}
 					}
 				]
