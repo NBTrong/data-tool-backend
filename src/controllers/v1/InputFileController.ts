@@ -3,9 +3,11 @@ import {
   Get,
   Controller,
   Tags,
+  Request,
   OperationId,
   TsoaResponse,
   Res,
+  Security,
   Query,
   Path, Post, UploadedFile, Put,
 } from 'tsoa';
@@ -50,18 +52,22 @@ export class InputFileController extends Controller {
   }
 
   @Get('/')
+  @Security('jwt')
   @OperationId('listInputFile')
   public async listInputFile(
+    @Request() request,
     @Res() res: TsoaResponse<200, CResponse>,
     @Query() page: number,
     @Query() limit: number,
     @Query() search?: string,
   ): Promise<void> {
     try {
+      const { id } = request.user;
       const inputFiles = await this.inputFileService.listInputFile({
         search,
         page,
         limit,
+        userId: id
       });
       return res(200, {
         message: 'Get list input file successfully.',

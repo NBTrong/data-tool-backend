@@ -1082,7 +1082,11 @@
 				"tags": [
 					"InputFile"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "query",

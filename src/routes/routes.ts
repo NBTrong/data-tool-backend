@@ -457,11 +457,13 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/v1/input-file',
+            authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(InputFileController)),
             ...(fetchMiddlewares<RequestHandler>(InputFileController.prototype.listInputFile)),
 
             function InputFileController_listInputFile(request: any, response: any, next: any) {
             const args = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
                     res: {"in":"res","name":"200","required":true,"ref":"CResponse"},
                     page: {"in":"query","name":"page","required":true,"dataType":"double"},
                     limit: {"in":"query","name":"limit","required":true,"dataType":"double"},

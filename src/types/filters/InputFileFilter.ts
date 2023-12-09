@@ -12,6 +12,7 @@ export declare type InputFileFilter = {
   search?: string,
   from?: string,
   to?: string,
+  userId?: number
 };
 
 export declare type ExportInputFileFilter = {

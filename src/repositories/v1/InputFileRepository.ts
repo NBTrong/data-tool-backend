@@ -23,6 +23,10 @@ export class InputFileRepository
     filter: InputFileFilter,
     sumOnly = false,
   ): AnyQueryBuilder {
+    if (filter?.userId) {
+      query.where('user_id', filter?.userId);
+    }
+
     if (filter?.search) {
       const search = filter.search.replace(/#/g, '').trim().toLowerCase();
       query
