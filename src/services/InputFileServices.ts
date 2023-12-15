@@ -122,7 +122,7 @@ export class InputFileServices implements IInputFileServices {
                         row_count,
                         query,
                         status: 'created',
-                        userId
+                        userId: Number(userId),
                     },
                 );
                 return await inputFile;
