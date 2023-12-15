@@ -27,8 +27,10 @@ export class InputFileController extends Controller {
   private inputFileService: IInputFileServices;
 
   @Post('/')
+  @Security('jwt')
   @OperationId('createInputFile')
   public async createInputFile(
+    @Request() request,
     @Res() res: TsoaResponse<200, CResponse>,
     @UploadedFile() file: Express.Multer.File,
     @Query() tab?: string,
@@ -36,8 +38,9 @@ export class InputFileController extends Controller {
     @Query() query?: string,
   ): Promise<void> {
     try {
+      const { id } = request.user;
       const files = await this.inputFileService
-        .createInputFile(file, tab, row_count, decodeURIComponent(query));
+        .createInputFile(file, tab, row_count, decodeURIComponent(query), id);
       return res(200, {
         message: 'Create input file successfully.',
         status: 'success',

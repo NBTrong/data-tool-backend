@@ -1,13 +1,13 @@
-import {InputFileFilter} from '@n-types/filters';
-import {IInputFileRepository} from '@n-repositories/interfaces/v1';
-import {REPOSITORIES} from '@n-types/injections/repositories';
-import {inject, injectable} from 'inversify';
+import { InputFileFilter } from '@n-types/filters';
+import { IInputFileRepository } from '@n-repositories/interfaces/v1';
+import { REPOSITORIES } from '@n-types/injections/repositories';
+import { inject, injectable } from 'inversify';
 
-import {handleDatabaseError} from '@n-errors/DatabaseError';
-import {InternalError} from '@n-errors/HttpError';
-import {IInputFileServices} from '@n-services/interface/IInputFileServices';
-import {uploadToGCS} from '@n-utils/fileUpload';
-import {getTabModel} from "@n-utils/modelExport";
+import { handleDatabaseError } from '@n-errors/DatabaseError';
+import { InternalError } from '@n-errors/HttpError';
+import { IInputFileServices } from '@n-services/interface/IInputFileServices';
+import { uploadToGCS } from '@n-utils/fileUpload';
+import { getTabModel } from "@n-utils/modelExport";
 
 
 @injectable()
@@ -104,7 +104,7 @@ export class InputFileServices implements IInputFileServices {
     //   fs.unlinkSync(fileName);
     // }
 
-    public async createInputFile(file: any, tab = '', row_count = 0, query = ''): Promise<any> {
+    public async createInputFile(file: any, tab = '', row_count = 0, query = '', userId = 0): Promise<any> {
         try {
             if (!this.validExcelFile(file)) {
                 throw new InternalError('File uploaded is not valid');
@@ -112,7 +112,7 @@ export class InputFileServices implements IInputFileServices {
             const url = await this.uploadFile(file, `${tab}`);
             if (url) {
                 const name = file.originalname;
-                const {size} = file;
+                const { size } = file;
                 const inputFile = this.inputFileRepository.create(
                     {
                         name,
@@ -122,6 +122,7 @@ export class InputFileServices implements IInputFileServices {
                         row_count,
                         query,
                         status: 'created',
+                        userId
                     },
                 );
                 return await inputFile;
@@ -135,7 +136,7 @@ export class InputFileServices implements IInputFileServices {
 
     public async listInputFile(filter: InputFileFilter): Promise<any> {
         try {
-            const {results: inputFiles, total} = await this
+            const { results: inputFiles, total } = await this
                 .inputFileRepository.getListInputFile(filter);
             const totalPage = Math.ceil(total / filter.limit);
             return {
@@ -168,17 +169,17 @@ export class InputFileServices implements IInputFileServices {
 
         const ModelQ: any = getTabModel(tab);
         await ModelQ.query().del().where("input_file_id", fileId)
-        return this.inputFileRepository.updateById(fileId, {index_processed: 0});
+        return this.inputFileRepository.updateById(fileId, { index_processed: 0 });
     }
 
-    async countSuccess(inputFile){
+    async countSuccess(inputFile) {
         const tab = inputFile.tab;
         const fileId = inputFile.id;
 
         const ModelQ: any = getTabModel(tab);
 
         let counters;
-        if (tab.includes("explore")){
+        if (tab.includes("explore")) {
             counters = await ModelQ.query()
                 .countDistinct('keyword as count')
                 .where('input_file_id', fileId)
@@ -191,14 +192,14 @@ export class InputFileServices implements IInputFileServices {
                 .andWhere('status', 1)
                 .count();
         }
-        console.log("counters",counters)
+        console.log("counters", counters)
         return counters[0].count <= inputFile.row_count ? counters[0].count : inputFile.row_count;
     }
 
     async handleUpdateFinished(inputFile) {
         const fileId = inputFile.id;
         const count = await this.countSuccess(inputFile);
-        console.log("count: ",count)
+        console.log("count: ", count)
         return this.inputFileRepository.updateById(fileId, {
             total_success: parseInt(count, 10),
             end_time: new Date()
